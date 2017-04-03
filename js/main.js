@@ -1,8 +1,7 @@
 var centerX = view.center.x;
 var centerY = view.center.y;
-// var points = 50;
 
-var genInnerRing = function( radius, points, cx, cy, color1, color2 ){
+var ringGen = function( radius, genRadius, points, cx, cy, color1, color2 ){
 
   // Convert angle to radians, not degrees.
   var angle = ( Math.PI*2 ) / points;
@@ -13,7 +12,7 @@ var genInnerRing = function( radius, points, cx, cy, color1, color2 ){
   var trackPath = new Path.Circle({
     center: new Point( cx , cy ),
     radius: radius,
-    strokeColor: 'blue'
+    strokeColor: 'rgba(0,0,0,0.1)'
   });
 
   for( var i = 1; i <= points; i++ ){
@@ -25,40 +24,16 @@ var genInnerRing = function( radius, points, cx, cy, color1, color2 ){
 
     var outer = new Path.Circle({
       center: new Point( radialX , radialY ),
-      radius: radius / 2,
-      strokeColor: i % 2 === 0 ? color1 : color2
+      radius: genRadius,
+      strokeColor: ( i % 2 === 0 ? color1 :  color2 )
     });
-
-    // console.log( "x: " + outer.position.x + ", y: " + outer.position.y );
   }
 };
 
+
 function onResize(event) {
-  genInnerRing( 130, 60, centerX, centerY, "rgb(255, 0, 0)", "rgb(255, 150, 0)" );
-  genInnerRing( 150, 60, centerX, centerY, "rgb(255, 0, 0)", "rgb(255, 150, 0)" );
-  genInnerRing( 110, 60, centerX, centerY, "rgb(255, 0, 0)", "rgb(255, 150, 0)" );
-  genInnerRing( 90, 60, centerX, centerY, "rgb(50, 215, 20)", "rgb(50, 204, 155)" );
-  genInnerRing( 55, 30, centerX, centerY, "rgb(80, 30, 215)", "rgb(120, 10, 205)" );
+  ringGen( 80, 80, 16, centerX, centerY, "blue" );
+  ringGen( 120, 120, 10, centerX, centerY, "rgba( 200, 50, 200, 0.2 )", "rgba( 200, 200, 0, 0.5 )" );
 }
 
 
-// for( var i = 1; i <= points; i++ ){
-//   // debugger
-//   console.log( angle );
-//   var x = centerX + radius + Math.cos(2 * Math.PI * i / points );
-//   var y = centerY + radius + Math.sin(2 * Math.PI * i / points );
-//   var shape = new Shape.Circle({
-//     center: new Point( x , y ),
-//     radius: radius,
-//     strokeColor: 'red'
-//   });
-//   // debugger
-//   console.log( "x: " + path.position.x + ", y: " + path.position.y )
-//   angle += ( 360 / points );
-// }
-
-
-// function onResize(event) {
-//   // Whenever the window is resized, recenter the path:
-//   path.position = view.center;
-// }
